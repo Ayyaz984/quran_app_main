@@ -12,7 +12,8 @@ const PdfSlice = createSlice({
   extraReducers: builder => {
     builder.addCase(pageChange.fulfilled, (state, action) => {
       let payload = action.payload;
-      state.lastOpnedPage = payload;
+      state.lastOpnedPage = payload.pageNo;
+      payload.pdfRef?.current.setPage(payload.pageNo);
     });
   },
 });

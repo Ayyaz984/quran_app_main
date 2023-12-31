@@ -1,23 +1,35 @@
+import {useSelector} from 'react-redux';
+import {store} from '../redux/store';
 import {chapters} from '../constants/Chapters';
+import {surah} from '../constants/Surahs';
 
 export const getChapterById = pageNo => {
-  let searchedChapter = null;
+  let searchedChapter = {};
   chapters.forEach(chapter => {
     if (pageNo >= chapter.pageStart && pageNo <= chapter.pageEnd) {
-      searchedChapter = chapter.labelEng;
+      searchedChapter.chapterLabel = chapter.labelEng;
+      searchedChapter.pageNo = pageNo;
     }
   });
 
   return searchedChapter;
 };
 
-// export const getJuzByPage = pageNo => {
-//   let searchJuz = null;
-//   juz.forEach(jz => {
-//     if (pageNo >= jz.pageStart && pageNo <= jz.pageEnd) {
-//       searchJuz = jz.labelEng;
-//     }
-//   });
+export const getSurahByPage = pageNo => {
+  let searchedSurah = {};
+  surah.forEach(sur => {
+    if (pageNo >= sur.pageStart && pageNo <= sur.pageEnd) {
+      searchedSurah.surahLabel = sur.labelEng;
+      searchedSurah.pageNo = pageNo;
+    }
+  });
 
-//   return searchJuz;
-// };
+  return searchedSurah;
+};
+
+// get last visited page to use this page no for app loading
+export function getLast() {
+  const state = store.getState();
+  console.log('asdfffffffffff;', state.Pdf);
+  return state.Pdf.lastOpnedPage;
+}
