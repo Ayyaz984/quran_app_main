@@ -2,24 +2,24 @@ import {View, Text, StyleSheet, TouchableOpacity, FlatList} from 'react-native';
 import React from 'react';
 import Modal from 'react-native-modal';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {chapters} from '../../../constants/Chapters';
 import {useDispatch, useSelector} from 'react-redux';
+import {hideSurahModal} from '../../../redux/features/SurahSlice';
 import {pageChange} from '../../../redux/features/PdfSlice';
 import {useNavigation} from '@react-navigation/native';
-import {hideChapterModal} from '../../../redux/features/ChapterSlice';
+import {surah} from '../../../constants/Surahs';
 
-const ChapterModal = ({pdfRef}) => {
+const SurahsModal = ({pdfRef}) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
-  const ChapterSlice = useSelector(state => state.Chapters);
+  const SurahState = useSelector(state => state.Surahs);
 
   const _renderItem = ({item, index}) => (
     <View>
       <TouchableOpacity
         onPress={() => {
-          dispatch(pageChange({pageNo: item.pageStart, pdfRef: pdfRef}));
-          dispatch(hideChapterModal());
           navigation.closeDrawer();
+          dispatch(hideSurahModal());
+          dispatch(pageChange({pageNo: item.pageStart, pdfRef: pdfRef}));
         }}>
         <View style={styles.contentBox}>
           <View style={styles.listNumber}>
@@ -36,18 +36,19 @@ const ChapterModal = ({pdfRef}) => {
       </TouchableOpacity>
     </View>
   );
+
   return (
-    <Modal isVisible={ChapterSlice.show}>
+    <Modal isVisible={SurahState.show}>
       <View style={styles.modalContent}>
         <TouchableOpacity
           style={{alignSelf: 'flex-end'}}
-          onPress={() => dispatch(hideChapterModal())}>
+          onPress={() => dispatch(hideSurahModal())}>
           <Ionicons name="close" size={25} color="#000000" />
         </TouchableOpacity>
 
         <Text style={styles.modalTitle}>Choose your chapter</Text>
         <FlatList
-          data={chapters}
+          data={surah}
           keyExtractor={item => item.labelEng}
           ItemSeparatorComponent={() => <View style={styles.divider}></View>}
           renderItem={_renderItem}
@@ -107,4 +108,4 @@ const styles = StyleSheet.create({
   labelArabic: {fontSize: 14, color: '#076C58'},
 });
 
-export default ChapterModal;
+export default SurahsModal;

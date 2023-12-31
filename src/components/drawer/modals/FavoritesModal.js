@@ -3,13 +3,16 @@ import React from 'react';
 import Modal from 'react-native-modal';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useDispatch, useSelector} from 'react-redux';
-import {getChapterById} from '../../../utils/Helpers';
+import {getChapterById, getSurahByPage} from '../../../utils/Helpers';
 import {
   hideFavoriteModal,
   removeFavorite,
 } from '../../../redux/features/FavoritesSlice';
+import {pageChange} from '../../../redux/features/PdfSlice';
+import {useNavigation} from '@react-navigation/native';
 
-const FavoritesModal = () => {
+const FavoritesModal = ({pdfRef}) => {
+  const navigation = useNavigation();
   const dispatch = useDispatch();
   const FavoritesState = useSelector(state => state.Favorites);
 
@@ -31,11 +34,21 @@ const FavoritesModal = () => {
           renderItem={({item, index}) => (
             <View
               style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-              <Text>{getChapterById(item)} - Surah Name</Text>
-              {/* <Text style={{marginRight: 10}}>{item}</Text> */}
+              <TouchableOpacity
+                onPress={() => {
+                  dispatch(pageChange({pageNo: item, pdfRef: pdfRef}));
+                  navigation.closeDrawer();
+                  dispatch(hideFavoriteModal());
+                }}>
+                <Text style={styles.title}>
+                  {getChapterById(item).chapterLabel} -{' '}
+                  {getSurahByPage(item).surahLabel}
+                </Text>
+              </TouchableOpacity>
               <TouchableOpacity
                 style={{flexDirection: 'row'}}
                 onPress={() => dispatch(removeFavorite(item))}>
+                <Text style={[styles.title, {marginRight: 10}]}>{item}</Text>
                 <Ionicons name="trash" size={25} color="red" />
               </TouchableOpacity>
             </View>
@@ -63,6 +76,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 14,
+    fontWeight: '700',
     color: '#000000',
   },
   divider: {

@@ -5,6 +5,12 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useDispatch} from 'react-redux';
 import {showBookmarkModal} from '../../redux/features/BookmarkSlice';
 import {showFavoriteModal} from '../../redux/features/FavoritesSlice';
+import {showChapterModal} from '../../redux/features/ChapterSlice';
+import {showSurahModal} from '../../redux/features/SurahSlice';
+import {
+  showAboutModal,
+  showInstructionModal,
+} from '../../redux/features/StaticModalSlice';
 
 const CustomDrawerContent = props => {
   const dispatch = useDispatch();
@@ -25,6 +31,7 @@ const CustomDrawerContent = props => {
           icon={({focused, size, color}) => (
             <Ionicons name="book" size={25} color="#000000" />
           )}
+          onPress={() => dispatch(showChapterModal())}
         />
         <DrawerItem
           label="Surah"
@@ -32,6 +39,7 @@ const CustomDrawerContent = props => {
           icon={({focused, size, color}) => (
             <Ionicons name="book" size={25} color="#000000" />
           )}
+          onPress={() => dispatch(showSurahModal())}
         />
         <DrawerItem
           label="Bookmarks"
@@ -62,6 +70,7 @@ const CustomDrawerContent = props => {
           icon={({focused, size, color}) => (
             <Ionicons name="information-circle" size={25} color="#000000" />
           )}
+          onPress={() => dispatch(showAboutModal())}
         />
         <DrawerItem
           label="Instructions"
@@ -69,6 +78,7 @@ const CustomDrawerContent = props => {
           icon={({focused, size, color}) => (
             <Ionicons name="help" size={25} color="#000000" />
           )}
+          onPress={() => dispatch(showInstructionModal())}
         />
         <DrawerItem
           label="Rate us on Play store"
