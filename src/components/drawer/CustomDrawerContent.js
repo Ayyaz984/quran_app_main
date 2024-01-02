@@ -11,8 +11,10 @@ import {
   showAboutModal,
   showInstructionModal,
 } from '../../redux/features/StaticModalSlice';
+import {useNavigation} from '@react-navigation/native';
 
 const CustomDrawerContent = props => {
+  const navigation = props.navigation;
   const dispatch = useDispatch();
 
   return (
@@ -70,7 +72,10 @@ const CustomDrawerContent = props => {
           icon={({focused, size, color}) => (
             <Ionicons name="information-circle" size={25} color="#000000" />
           )}
-          onPress={() => dispatch(showAboutModal())}
+          onPress={() => {
+            dispatch(showAboutModal());
+            navigation.closeDrawer();
+          }}
         />
         <DrawerItem
           label="Instructions"
@@ -78,7 +83,10 @@ const CustomDrawerContent = props => {
           icon={({focused, size, color}) => (
             <Ionicons name="help" size={25} color="#000000" />
           )}
-          onPress={() => dispatch(showInstructionModal())}
+          onPress={() => {
+            dispatch(showInstructionModal());
+            navigation.closeDrawer();
+          }}
         />
         <DrawerItem
           label="Rate us on Play store"

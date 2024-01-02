@@ -1,9 +1,9 @@
-import {View, Text, StyleSheet} from 'react-native';
+import {View, StyleSheet, StatusBar, Platform} from 'react-native';
 import React, {useEffect, useRef, useState} from 'react';
 // import sourceFile from '../assets/pdf/test.pdf';
 import Pdf from 'react-native-pdf';
 import {pageChange} from '../redux/features/PdfSlice';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import Header from '../components/header/Header';
 import FavoritesModal from '../components/drawer/modals/FavoritesModal';
 import BookmarkModal from '../components/drawer/modals/BookmarkModal';
@@ -12,6 +12,7 @@ import {getLast} from '../utils/Helpers';
 import SurahsModal from '../components/drawer/modals/SurahsModal';
 import AboutUsModal from '../components/drawer/modals/AboutUsModal';
 import InstructionsModal from '../components/drawer/modals/InstructionsModal';
+import {scale, verticalScale} from '../components/scale/Scale';
 
 const ViewPDF = () => {
   const pdfRef = useRef();
@@ -23,18 +24,22 @@ const ViewPDF = () => {
   };
 
   useEffect(() => {
-    // setPage(lastOpnedPage);
     setPage(getLast());
   }, []);
 
   return (
     <View style={styles.container}>
+      <StatusBar backgroundColor="#d8d8d8" barStyle="dark-content" />
       <Header />
       <Pdf
         ref={pdfRef}
         trustAllCerts={false}
         horizontal
-        source={{uri: 'bundle-assets://pdf24_merged-compressed.pdf'}}
+        source={
+          Platform.OS === 'android'
+            ? {uri: 'bundle-assets://pdf24_merged-compressed.pdf', cache: true}
+            : require('../../android/app/src/main/assets/pdf24_merged-compressed.pdf')
+        }
         enablePaging={true}
         style={styles.pdf}
         enableRTL={true}
@@ -61,7 +66,7 @@ const styles = StyleSheet.create({
   pdf: {
     flex: 1,
     marginTop: 5,
-    transform: [{scaleY: 1.12}, {scaleX: 1.07}],
+    transform: [{scaleY: verticalScale(1.12)}, {scaleX: scale(1.03)}],
     width: '100%',
   },
 });

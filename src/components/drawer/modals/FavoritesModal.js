@@ -16,7 +16,6 @@ const FavoritesModal = ({pdfRef}) => {
   const dispatch = useDispatch();
   const FavoritesState = useSelector(state => state.Favorites);
 
-  console.log('Favo:', FavoritesState);
   return (
     <Modal isVisible={FavoritesState.show}>
       <View style={styles.modalContent}>
@@ -41,7 +40,7 @@ const FavoritesModal = ({pdfRef}) => {
                   dispatch(hideFavoriteModal());
                 }}>
                 <Text style={styles.title}>
-                  {getChapterById(item).chapterLabel} -{' '}
+                  {getChapterById(item).chapterLabel || 'Juz 1'} -{' '}
                   {getSurahByPage(item).surahLabel}
                 </Text>
               </TouchableOpacity>

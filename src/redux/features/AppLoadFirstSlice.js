@@ -1,7 +1,6 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 
 export const SetAppFirstLoad = createAsyncThunk('SetAppLoadFirst', params => {
-  console.log('apploadfirst async thunk:', params);
   return params;
 });
 

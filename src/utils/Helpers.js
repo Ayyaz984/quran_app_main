@@ -30,6 +30,5 @@ export const getSurahByPage = pageNo => {
 // get last visited page to use this page no for app loading
 export function getLast() {
   const state = store.getState();
-  console.log('asdfffffffffff;', state.Pdf);
   return state.Pdf.lastOpnedPage;
 }

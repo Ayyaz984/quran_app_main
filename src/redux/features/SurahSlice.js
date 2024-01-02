@@ -7,7 +7,6 @@ const SurahSlice = createSlice({
   },
   reducers: {
     showSurahModal(state, action) {
-      console.log('surah');
       state.show = true;
     },
     hideSurahModal(state, action) {

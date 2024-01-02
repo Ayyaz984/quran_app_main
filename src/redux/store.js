@@ -24,7 +24,7 @@ const rootReducer = combineReducers({
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  whiteList: ['AppLoadFirst', 'PdfLoad', 'Pdf', 'Favorites', 'Bookmarks'],
+  whiteList: ['AppLoadFirst', 'Pdf', 'Favorites', 'Bookmarks'],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
