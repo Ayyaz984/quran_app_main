@@ -8,7 +8,6 @@ const favoriteSlice = createSlice({
   },
   reducers: {
     setFavorite(state, action) {
-      console.log('set favorite:', state);
       let pageNo = action.payload;
       if (state.favorites.length) {
         let ind = state.favorites.indexOf(pageNo);
@@ -20,7 +19,6 @@ const favoriteSlice = createSlice({
       } else {
         state.favorites.push(pageNo);
       }
-      console.log('states:', state);
     },
     removeFavorite(state, action) {
       let pageNo = action.payload;

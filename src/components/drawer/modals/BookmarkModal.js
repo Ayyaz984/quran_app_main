@@ -16,7 +16,6 @@ const BookmarkModal = ({pdfRef}) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const BookmarkState = useSelector(state => state.Bookmarks);
-  console.log('Modal:', BookmarkState);
 
   return (
     <Modal isVisible={BookmarkState.show}>
@@ -45,7 +44,7 @@ const BookmarkModal = ({pdfRef}) => {
                   dispatch(hideBookmarkModal());
                 }}>
                 <Text style={styles.title}>
-                  {getChapterById(item).chapterLabel} -{' '}
+                  {getChapterById(item).chapterLabel || 'Juz 1'} -{' '}
                   {getSurahByPage(item).surahLabel}
                 </Text>
               </TouchableOpacity>

@@ -8,7 +8,6 @@ const bookmarkSlice = createSlice({
   },
   reducers: {
     setBookmark(state, action) {
-      console.log('set bookmark:', state);
       let pageNo = action.payload;
       if (state.bookmarks.length) {
         let ind = state.bookmarks.indexOf(pageNo);
@@ -20,7 +19,6 @@ const bookmarkSlice = createSlice({
       } else {
         state.bookmarks.push(pageNo);
       }
-      console.log('states:', state);
     },
     removeBookmark(state, action) {
       let pageNo = action.payload;

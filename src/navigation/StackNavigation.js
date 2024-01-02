@@ -9,7 +9,6 @@ const StackNavigation = () => {
   const Stack = createNativeStackNavigator();
 
   const {AppLoadFirstTime} = useSelector(state => state.AppLoadFirst);
-  console.log('Stack Navigation 12:', AppLoadFirstTime);
   return (
     <Stack.Navigator screenOptions={{headerShown: false}}>
       {AppLoadFirstTime ? (
