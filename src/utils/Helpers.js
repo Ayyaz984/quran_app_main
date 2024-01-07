@@ -8,6 +8,7 @@ export const getChapterById = pageNo => {
   chapters.forEach(chapter => {
     if (pageNo >= chapter.pageStart && pageNo <= chapter.pageEnd) {
       searchedChapter.chapterLabel = chapter.labelEng;
+      searchedChapter.chapterLabelAra = chapter.labelAra;
       searchedChapter.pageNo = pageNo;
     }
   });
@@ -20,6 +21,7 @@ export const getSurahByPage = pageNo => {
   surah.forEach(sur => {
     if (pageNo >= sur.pageStart && pageNo <= sur.pageEnd) {
       searchedSurah.surahLabel = sur.labelEng;
+      searchedSurah.surahLabelAra = sur.labelAra;
       searchedSurah.pageNo = pageNo;
     }
   });

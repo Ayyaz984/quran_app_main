@@ -4,6 +4,7 @@ import Modal from 'react-native-modal';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useDispatch, useSelector} from 'react-redux';
 import {hideAboutModal} from '../../../redux/features/StaticModalSlice';
+import {scale} from '../../scale/Scale';
 
 const AboutUsModal = () => {
   const dispatch = useDispatch();
@@ -51,15 +52,15 @@ const styles = StyleSheet.create({
   },
   modalTitle: {
     alignSelf: 'center',
-    fontSize: 16,
+    fontSize: scale(16),
     color: '#000000',
     fontWeight: '700',
     marginBottom: 20,
   },
   para: {
-    fontSize: 16,
+    fontSize: scale(12),
     color: '#000000',
-    fontWeight: '600',
+    fontWeight: '400',
     marginVertical: 15,
   },
 });

@@ -1,5 +1,12 @@
-import {View, Text, StyleSheet, TouchableOpacity, FlatList} from 'react-native';
-import React from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  FlatList,
+  Dimensions,
+} from 'react-native';
+import React, {useMemo} from 'react';
 import Modal from 'react-native-modal';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {chapters} from '../../../constants/Chapters';
@@ -7,11 +14,16 @@ import {useDispatch, useSelector} from 'react-redux';
 import {pageChange} from '../../../redux/features/PdfSlice';
 import {useNavigation} from '@react-navigation/native';
 import {hideChapterModal} from '../../../redux/features/ChapterSlice';
+import {scale} from '../../scale/Scale';
 
 const ChapterModal = ({pdfRef}) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const ChapterSlice = useSelector(state => state.Chapters);
+
+  const chaptersList = useMemo(() => {
+    return chapters;
+  }, []);
 
   const _renderItem = ({item, index}) => (
     <View>
@@ -25,12 +37,13 @@ const ChapterModal = ({pdfRef}) => {
           <View style={styles.listNumber}>
             <Text style={{color: '#FFFFFF'}}>{index + 1}</Text>
           </View>
-          <View style={styles.contentList}>
-            <View style={styles.labelEnglish}>
-              <Text style={styles.title}>{item.labelEng}</Text>
-              <Text style={styles.labelArabic}>{item.labelAra}</Text>
+          <View style={styles.listItemContainer}>
+            <View style={{marginLeft: 10}}>
+              <Text style={styles.titleEng}>{item.labelEng}</Text>
             </View>
-            <Text style={styles.subTitle}>{item.subTitle}</Text>
+            <View>
+              <Text style={styles.titleAra}>{item.labelAra}</Text>
+            </View>
           </View>
         </View>
       </TouchableOpacity>
@@ -42,12 +55,12 @@ const ChapterModal = ({pdfRef}) => {
         <TouchableOpacity
           style={{alignSelf: 'flex-end'}}
           onPress={() => dispatch(hideChapterModal())}>
-          <Ionicons name="close" size={25} color="#000000" />
+          <Ionicons name="close" size={scale(25)} color="#000000" />
         </TouchableOpacity>
 
         <Text style={styles.modalTitle}>Choose your chapter</Text>
         <FlatList
-          data={chapters}
+          data={chaptersList}
           keyExtractor={item => item.labelEng}
           ItemSeparatorComponent={() => <View style={styles.divider}></View>}
           renderItem={_renderItem}
@@ -67,13 +80,13 @@ const styles = StyleSheet.create({
   },
   modalTitle: {
     alignItems: 'center',
-    fontSize: 16,
+    fontSize: scale(16),
     color: '#000000',
     fontWeight: '700',
     marginBottom: 20,
   },
   title: {
-    fontSize: 14,
+    fontSize: scale(14),
     color: '#000000',
   },
   divider: {
@@ -91,20 +104,42 @@ const styles = StyleSheet.create({
   listNumber: {
     width: 36,
     height: 36,
-    backgroundColor: '#87D1A4',
+    // backgroundColor: '#513204',
+    backgroundColor: '#A36527',
     borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center',
   },
+  listItemContainer: {
+    width: Dimensions.get('window').width - 110,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  titleEng: {
+    fontSize: scale(14),
+    color: '#000000',
+    fontWeight: '500',
+  },
+  subTitle: {color: 'grey', fontSize: scale(10), marginRight: 2},
+  titleAra: {color: '#076C58', fontSize: scale(26)},
   contentList: {
     marginLeft: 10,
-    width: '83%',
+    width: Dimensions.get('window').width - 112,
+    height: 36,
+    justifyContent: 'center',
   },
   labelEnglish: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
   },
-  labelArabic: {fontSize: 14, color: '#076C58'},
+  labelArabic: {
+    fontSize: scale(16),
+    fontWeight: '800',
+    color: '#076C58',
+    marginRight: 20,
+  },
 });
 
 export default ChapterModal;

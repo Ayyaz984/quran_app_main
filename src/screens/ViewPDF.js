@@ -1,6 +1,5 @@
 import {View, StyleSheet, StatusBar, Platform} from 'react-native';
 import React, {useEffect, useRef, useState} from 'react';
-// import sourceFile from '../assets/pdf/test.pdf';
 import Pdf from 'react-native-pdf';
 import {pageChange} from '../redux/features/PdfSlice';
 import {useDispatch} from 'react-redux';
@@ -13,6 +12,7 @@ import SurahsModal from '../components/drawer/modals/SurahsModal';
 import AboutUsModal from '../components/drawer/modals/AboutUsModal';
 import InstructionsModal from '../components/drawer/modals/InstructionsModal';
 import {scale, verticalScale} from '../components/scale/Scale';
+import {toggleHeader} from '../redux/features/HeaderSlice';
 
 const ViewPDF = () => {
   const pdfRef = useRef();
@@ -37,8 +37,8 @@ const ViewPDF = () => {
         horizontal
         source={
           Platform.OS === 'android'
-            ? {uri: 'bundle-assets://pdf24_merged-compressed.pdf', cache: true}
-            : require('../../android/app/src/main/assets/pdf24_merged-compressed.pdf')
+            ? {uri: 'bundle-assets://pdf24_merged.pdf', cache: true}
+            : require('../../android/app/src/main/assets/pdf24_merged.pdf')
         }
         enablePaging={true}
         style={styles.pdf}
@@ -48,6 +48,7 @@ const ViewPDF = () => {
         spacing={40}
         showsHorizontalScrollIndicator={false}
         onPageChanged={page => handlePageChange(page)}
+        onPageSingleTap={() => dispatch(toggleHeader())}
       />
       <ChapterModal pdfRef={pdfRef} />
       <SurahsModal pdfRef={pdfRef} />
@@ -65,7 +66,6 @@ const styles = StyleSheet.create({
   },
   pdf: {
     flex: 1,
-    marginTop: 5,
     transform: [{scaleY: verticalScale(1.12)}, {scaleX: scale(1.03)}],
     width: '100%',
   },

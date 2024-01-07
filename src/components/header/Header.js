@@ -5,6 +5,8 @@ import {useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
 import {setFavorite} from '../../redux/features/FavoritesSlice';
 import {setBookmark} from '../../redux/features/BookmarkSlice';
+import {getSurahByPage} from '../../utils/Helpers';
+import {scale} from '../scale/Scale';
 
 const Header = () => {
   const navigation = useNavigation();
@@ -12,16 +14,44 @@ const Header = () => {
   const PdfState = useSelector(state => state.Pdf);
   const FavoritesState = useSelector(state => state.Favorites);
   const BookmarkState = useSelector(state => state.Bookmarks);
+  const HeaderState = useSelector(state => state.Header);
 
   return (
-    <View>
-      <View style={styles.menu}>
+    <View
+      style={{
+        width: '100%',
+        height: 50,
+        alignItems: 'center',
+        // backgroundColor: '#513204',
+        backgroundColor: '#A36527',
+        flexDirection: 'row',
+        paddingHorizontal: 20,
+        position: 'absolute',
+        zIndex: HeaderState.show ? 1 : 0,
+        opacity: 0.9,
+      }}>
+      <View style={{flexDirection: 'row', alignItems: 'center', width: '60%'}}>
         <TouchableOpacity onPress={() => navigation.openDrawer()}>
-          <Ionicons name="menu" size={30} color="#000000" />
+          <Ionicons name="menu" size={30} color="#FFFFFF" />
         </TouchableOpacity>
+        <Text
+          style={{
+            fontSize: scale(20),
+            fontWeight: '600',
+            color: '#ffffff',
+            marginLeft: 7,
+          }}>
+          {getSurahByPage(PdfState.lastOpnedPage).surahLabelAra}
+        </Text>
       </View>
-      <View style={styles.fav}>
+      <View
+        style={{
+          width: '40%',
+          flexDirection: 'row',
+          justifyContent: 'flex-end',
+        }}>
         <TouchableOpacity
+          style={{marginRight: 10}}
           onPress={() => dispatch(setBookmark(PdfState.lastOpnedPage))}>
           <Ionicons
             name={
@@ -30,12 +60,11 @@ const Header = () => {
                 : 'bookmark-outline'
             }
             size={30}
-            color={'black'}
+            color={'#FFFFFF'}
           />
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => dispatch(setFavorite(PdfState.lastOpnedPage))}
-          style={{marginTop: 15}}>
+          onPress={() => dispatch(setFavorite(PdfState.lastOpnedPage))}>
           <Ionicons
             name={
               FavoritesState.favorites.indexOf(PdfState.lastOpnedPage) > -1
@@ -43,7 +72,7 @@ const Header = () => {
                 : 'star-outline'
             }
             size={30}
-            color="#000000"
+            color="#FFFFFF"
           />
         </TouchableOpacity>
       </View>

@@ -11,6 +11,7 @@ import {
 } from '../../../redux/features/BookmarkSlice';
 import {pageChange} from '../../../redux/features/PdfSlice';
 import {useNavigation} from '@react-navigation/native';
+import {scale} from '../../scale/Scale';
 
 const BookmarkModal = ({pdfRef}) => {
   const navigation = useNavigation();
@@ -30,12 +31,21 @@ const BookmarkModal = ({pdfRef}) => {
         <FlatList
           data={BookmarkState.bookmarks}
           keyExtractor={item => item}
+          ListEmptyComponent={() => (
+            <View>
+              <Text style={{color: '#000000'}}>
+                You don't have any bookmark.
+              </Text>
+            </View>
+          )}
           ItemSeparatorComponent={() => <View style={styles.divider}></View>}
           renderItem={({item, index}) => (
             <View
               style={{
                 flexDirection: 'row',
                 justifyContent: 'space-between',
+                alignItems: 'center',
+                marginVertical: 7,
               }}>
               <TouchableOpacity
                 onPress={() => {
@@ -44,12 +54,12 @@ const BookmarkModal = ({pdfRef}) => {
                   dispatch(hideBookmarkModal());
                 }}>
                 <Text style={styles.title}>
-                  {getChapterById(item).chapterLabel || 'Juz 1'} -{' '}
+                  {index + 1}. {getChapterById(item).chapterLabel || 'Juz 1'} -{' '}
                   {getSurahByPage(item).surahLabel}
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity
-                style={{flexDirection: 'row'}}
+                style={{flexDirection: 'row', alignItems: 'center'}}
                 onPress={() => dispatch(removeBookmark(item))}>
                 <Text style={[styles.title, {marginRight: 10}]}>{item}</Text>
                 <Ionicons name="trash" size={25} color="red" />
@@ -72,13 +82,13 @@ const styles = StyleSheet.create({
   },
   modalTitle: {
     alignItems: 'center',
-    fontSize: 16,
+    fontSize: scale(16),
     color: '#000000',
     fontWeight: '700',
     marginBottom: 20,
   },
   title: {
-    fontSize: 14,
+    fontSize: scale(14),
     fontWeight: '700',
     color: '#000000',
   },

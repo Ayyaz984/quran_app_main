@@ -4,6 +4,7 @@ import OnboardingSwiper from 'react-native-onboarding-swiper';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useDispatch} from 'react-redux';
 import {SetAppFirstLoad} from '../redux/features/AppLoadFirstSlice';
+import {scale} from '../components/scale/Scale';
 
 const OnBoarding = () => {
   const dispatch = useDispatch();
@@ -11,7 +12,7 @@ const OnBoarding = () => {
   const Done = ({...props}) => {
     return (
       <TouchableOpacity {...props}>
-        <Text style={{color: 'white', marginRight: 15, fontSize: 16}}>
+        <Text style={{color: 'white', marginRight: 15, fontSize: scale(16)}}>
           Done
         </Text>
       </TouchableOpacity>

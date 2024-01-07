@@ -2,6 +2,7 @@ import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import React from 'react';
 import {useDispatch} from 'react-redux';
 import {pageChange} from '../../../redux/features/PdfSlice';
+import {scale} from '../../scale/Scale';
 
 const ListItem = ({item, index}) => {
   const dispatch = useDispatch();
@@ -50,7 +51,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-  labelArabic: {fontSize: 14, color: '#076C58'},
+  labelArabic: {fontSize: scale(14), color: '#076C58'},
 });
 
 export default ListItem;
