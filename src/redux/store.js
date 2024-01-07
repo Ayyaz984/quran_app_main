@@ -9,6 +9,7 @@ import ChapterSlice from './features/ChapterSlice';
 import PdfLoad from './features/PdfLoad';
 import SurahSlice from './features/SurahSlice';
 import StaticModalSlice from './features/StaticModalSlice';
+import HeaderSlice from './features/HeaderSlice';
 
 const rootReducer = combineReducers({
   AppLoadFirst: AppLoadFirstSlice,
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
   Chapters: ChapterSlice,
   Surahs: SurahSlice,
   StaticModal: StaticModalSlice,
+  Header: HeaderSlice,
 });
 
 const persistConfig = {

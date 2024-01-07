@@ -8,7 +8,9 @@ const Drawer = createDrawerNavigator();
 const DrawerNavigation = () => {
   return (
     <Drawer.Navigator
-      screenOptions={{headerShown: false}}
+      screenOptions={{
+        headerShown: false,
+      }}
       drawerContent={props => <CustomDrawerContent {...props} />}>
       <Drawer.Screen name="ViewPDF" component={ViewPDF} />
     </Drawer.Navigator>

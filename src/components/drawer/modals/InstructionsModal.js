@@ -4,6 +4,7 @@ import Modal from 'react-native-modal';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useDispatch, useSelector} from 'react-redux';
 import {hideInstructionModal} from '../../../redux/features/StaticModalSlice';
+import {scale} from '../../scale/Scale';
 
 const InstructionsModal = () => {
   const dispatch = useDispatch();
@@ -20,26 +21,28 @@ const InstructionsModal = () => {
 
         <Text style={styles.modalTitle}>Instructions</Text>
         <View>
-          <Text style={styles.para}>1. View Menu</Text>
-          <Text style={{fontSize: 14, color: '#000000', marginLeft: 20}}>
+          <Text style={styles.title}>1. View Menu</Text>
+          <Text style={styles.para}>
             Swipe your figner from left to right on your screen or click on{' '}
-            <Ionicons name="menu" size={25} color="#000000" /> to view the menu.
+            <Ionicons name="menu" size={scale(18)} color="#000000" /> to view
+            the menu.
           </Text>
         </View>
 
         <View>
-          <Text style={styles.para}>2. Bookmarks</Text>
-          <Text style={{fontSize: 14, color: '#000000', marginLeft: 20}}>
-            Tap the <Ionicons name="bookmark" size={25} color="#000000" />
+          <Text style={styles.title}>2. Bookmarks</Text>
+          <Text style={styles.para}>
+            Tap the{' '}
+            <Ionicons name="bookmark" size={scale(18)} color="#000000" />
             button to save a page to bookmarks.
           </Text>
         </View>
 
         <View>
-          <Text style={styles.para}>3. Favorites</Text>
-          <Text style={{fontSize: 14, color: '#000000', marginLeft: 20}}>
+          <Text style={styles.title}>3. Favorites</Text>
+          <Text style={styles.para}>
             Frequently read pages or surah's aan be saved to favorites by
-            tapping <Ionicons name="star" size={25} color="#000000" />
+            tapping <Ionicons name="star" size={scale(18)} color="#000000" />
           </Text>
         </View>
       </View>
@@ -56,17 +59,23 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   modalTitle: {
-    fontSize: 16,
+    fontSize: scale(16),
     color: '#000000',
     fontWeight: '800',
     alignSelf: 'center',
     marginBottom: 20,
   },
-  para: {
-    fontSize: 16,
+  title: {
+    fontSize: scale(14),
     color: '#000000',
     fontWeight: '800',
     marginTop: 15,
+  },
+  para: {
+    fontSize: scale(12),
+    fontWeight: '400',
+    color: '#000000',
+    marginLeft: 20,
   },
 });
 
