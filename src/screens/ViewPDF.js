@@ -1,8 +1,15 @@
-import {View, StyleSheet, StatusBar, Platform} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  StatusBar,
+  Platform,
+  Dimensions,
+  PixelRatio,
+} from 'react-native';
 import React, {useEffect, useRef, useState} from 'react';
 import Pdf from 'react-native-pdf';
 import {pageChange} from '../redux/features/PdfSlice';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import Header from '../components/header/Header';
 import FavoritesModal from '../components/drawer/modals/FavoritesModal';
 import BookmarkModal from '../components/drawer/modals/BookmarkModal';
@@ -14,10 +21,14 @@ import InstructionsModal from '../components/drawer/modals/InstructionsModal';
 import {scale, verticalScale} from '../components/scale/Scale';
 import {toggleHeader} from '../redux/features/HeaderSlice';
 
+const {width, height, fontScale} = Dimensions.get('window');
 const ViewPDF = () => {
   const pdfRef = useRef();
   const dispatch = useDispatch();
   const [page, setPage] = useState(1);
+  const HeaderState = useSelector(state => state.Header);
+
+  const s = (height / 680) * 1.2;
 
   const handlePageChange = pageNo => {
     dispatch(pageChange({pageNo: pageNo}));
@@ -30,7 +41,7 @@ const ViewPDF = () => {
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor="#d8d8d8" barStyle="dark-content" />
-      <Header />
+      {HeaderState.show && <Header />}
       <Pdf
         ref={pdfRef}
         trustAllCerts={false}
@@ -41,7 +52,18 @@ const ViewPDF = () => {
             : require('../../android/app/src/main/assets/pdf24_merged.pdf')
         }
         enablePaging={true}
-        style={styles.pdf}
+        style={[
+          styles.pdf,
+          {
+            transform: [
+              {scaleY: height < 829 ? s - 0.08 : height / 680},
+              {
+                scaleX:
+                  width < 392 ? width / 360 + 0.08 : (width / 380) * 1.037,
+              },
+            ],
+          },
+        ]}
         enableRTL={true}
         enableAntialiasing={true}
         page={page}
@@ -63,11 +85,11 @@ const ViewPDF = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    width: Dimensions.get('window').width,
   },
   pdf: {
     flex: 1,
-    transform: [{scaleY: verticalScale(1.12)}, {scaleX: scale(1.03)}],
-    width: '100%',
+    width: Dimensions.get('window').width,
   },
 });
 

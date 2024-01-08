@@ -27,7 +27,7 @@ const Header = () => {
         flexDirection: 'row',
         paddingHorizontal: 20,
         position: 'absolute',
-        zIndex: HeaderState.show ? 1 : 0,
+        zIndex: 1,
         opacity: 0.9,
       }}>
       <View style={{flexDirection: 'row', alignItems: 'center', width: '60%'}}>
